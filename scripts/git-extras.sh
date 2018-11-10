@@ -1,4 +1,4 @@
-as#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -22,7 +22,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     && wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh \
     && sudo bash gitflow-installer.sh install stable \
     && rm gitflow-installer.sh \
-    && wget --no-check-certificate -q https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O $HOME/bin/diff-so-fany \
+    && wget --no-check-certificate -q https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy -O $HOME/bin/diff-so-fancy \
     && chmod +x $BIN_DIRECTORY/diff-so-fancy \
     && write_marker "$NAME" "$VERSION" "$MARKER"
 else
