@@ -3,13 +3,13 @@
 set -e
 
 ###############################################################################
-# Noder Version Manager
+# Node Version Manager
 ###############################################################################
 # URL: https://github.com/creationix/nvm
 ###############################################################################
 
 NAME="Node Version Manager (nvm)"
-MARKER=nvm
+MARKER="nvm"
 
 ###############################################################################
 
@@ -18,12 +18,11 @@ MARKER=nvm
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$NVM_VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$NVM_VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

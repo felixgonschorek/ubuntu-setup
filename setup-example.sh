@@ -1,23 +1,23 @@
-
 #!/usr/bin/env bash
 
 set -e
 
-# LOCATION OF THE MARKER FILES
-export MARKER_DIRECTORY="$HOME/.idempotent"
+# LOCATION OF THE MARKER FILES DETERMINATING WHAT IS INSTALLED
+MARKER_DIRECTORY="$HOME/.idempotent"
 
-# BIN DIRECTORY
-export BIN_DIRECTORY="$HOME/bin"
+# LOCAL BIN DIRECTORY
+BIN_DIRECTORY="$HOME/bin"
 
 # DO NOT REMOVE THIS IS REQUIRED
-( ./scripts/_basic-requirements.sh )
+. ./helper.sh
+. ./scripts/_basic-requirements.sh
 
 
 # SETTINGS DEFAULT OVERRIDES FOR SCRIPTS
-# export DOCKER_COMPOSE_VERSION="1.20.1"
+# DOCKER_COMPOSE_VERSION="1.20.1"
 
 # ADD THE SCRIPTS YOU WANT TO RUN
-# ( ./scripts/chrome.sh )
+# . ./scripts/chrome.sh
 
 # CLEANUP
 sudo apt-get autoremove \

@@ -10,10 +10,11 @@ set -e
 
 NAME="Open VPN"
 MARKER="openvpn"
+VERSION="distro version"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     sudo apt-get install -y \
@@ -21,8 +22,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
         network-manager \
         network-manager-openvpn \
         network-manager-openvpn-gnome \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

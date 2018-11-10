@@ -10,10 +10,11 @@ set -e
 
 NAME="Visual Studio Code Extensions"
 MARKER="vscode-extensions"
+VERSION="current"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     code --install-extension 2gua.rainbow-brackets \
@@ -27,8 +28,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     && code --install-extension robertohuertasm.vscode-icons \
     && code --install-extension robinbentley.sass-indented \
     && code --install-extension rust-lang.rust \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

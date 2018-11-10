@@ -3,23 +3,22 @@
 set -e
 
 ###############################################################################
-# Disabled Guest Login in greeter
+# Vim - the ubiquitous text editor
 ###############################################################################
-# URL: http://ubuntuhandbook.org/index.php/2016/04/remove-guest-session-ubuntu-16-04/
-###############################################################################
-
-NAME="Disable Guest Login"
-MARKER="disable-guest-login"
-
+# URL: https://www.vim.org/
 ###############################################################################
 
-echo "Trying to install $NAME"
+NAME="Vim"
+MARKER="vim"
+VERSION="distro version"
+
+###############################################################################
+
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
-    sudo sh -c 'printf "[Seat:*]\nallow-guest=false\n" >/etc/lightdm/lightdm.conf.d/50-no-guest.conf' \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    sudo apt-get install -y --no-install-recommends vim \
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi
-

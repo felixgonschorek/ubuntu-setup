@@ -10,10 +10,11 @@ set -e
 
 NAME="Java 8 (Oracle)"
 MARKER="oracle-java8"
+VERSION="8"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     sudo add-apt-repository -y ppa:webupd8team/java \
@@ -22,8 +23,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     && sudo apt-get install -y --no-install-recommends \
         oracle-java8-installer \
         oracle-java8-set-default \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished install $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

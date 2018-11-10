@@ -3,26 +3,25 @@
 set -e
 
 ###############################################################################
-# Oracle Java 10 SDK via ppa:linuxuprising/java
+# Löve Game Engine
 ###############################################################################
-# URL: https://www.linuxuprising.com/2018/04/install-oracle-java-10-in-ubuntu-or.html
-###############################################################################
-
-NAME="Java 10 (Oracle)"
-MARKER="oracle-java10"
-
+# URL: https://love2d.org/
 ###############################################################################
 
-echo "Trying to install $NAME"
+NAME="Löve"
+MARKER="löve"
+VERSION="ppa version"
+
+###############################################################################
+
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
-    sudo add-apt-repository -y ppa:linuxuprising/java \
-    && echo oracle-java10-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections \
+    sudo add-apt-repository -y ppa:bartbes/love-stable \
     && sudo apt-get update \
     && sudo apt-get install -y --no-install-recommends \
-        oracle-java10-installer \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished install $NAME"
+        love \
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

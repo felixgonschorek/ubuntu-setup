@@ -10,6 +10,7 @@ set -e
 
 NAME="RCM"
 MARKER="rcm"
+VERSION="ppa version"
 
 ###############################################################################
 
@@ -18,7 +19,7 @@ MARKER="rcm"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     sudo add-apt-repository -y ppa:martin-frost/thoughtbot-rcm \
@@ -26,8 +27,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     && sudo apt-get install -y rcm \
     && git clone $DOTFILES_REPO $HOME/.dotfiles \
     && rcup \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished install $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

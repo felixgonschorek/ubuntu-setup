@@ -3,13 +3,14 @@
 set -e
 
 ###############################################################################
-# ZSH Shell with Oh My ZSH and Powerline font
+# Oh My ZSH theme Powerlevel9k with Powerline font
 ###############################################################################
 # URL: http://ohmyz.sh/
 ###############################################################################
 
-NAME="ZSH with Oh My ZSH"
-MARKER="zsh"
+NAME="Oh My ZSH Theme Powerlevel9k"
+MARKER="oh-my-zsh-powerlevel9k"
+VERSION="current"
 
 ###############################################################################
 
@@ -21,18 +22,14 @@ MARKER="zsh"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
-    sudo apt-get install -y  zsh \
-    && if [ ! -d ~/.oh-my-zsh ]; then git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh; fi \
-    && git clone https://github.com/powerline/fonts.git --depth=1 /tmp/powerline \
+    git clone https://github.com/powerline/fonts.git --depth=1 /tmp/powerline \
     && bash /tmp/powerline/install.sh \
     && rm -rf /tmp/powerline \
     && git clone $THEME_GIT $HOME/.oh-my-zsh/custom/themes/$THEME_DIR \
-    && chsh -s /bin/zsh \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

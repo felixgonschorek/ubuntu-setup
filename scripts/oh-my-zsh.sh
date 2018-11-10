@@ -3,24 +3,31 @@
 set -e
 
 ###############################################################################
-# Google Chrome
+# ZSH Shell with Oh My ZSH
 ###############################################################################
-# URL: https://www.google.com/chrome/
+# URL: http://ohmyz.sh/
 ###############################################################################
 
-NAME="Google Chrome"
-MARKER="chrome"
+NAME="ZSH with Oh My ZSH"
+MARKER="oh-my-zsh"
 VERSION="current"
+
+###############################################################################
+
+# THEME_DIR
+[ -z "${THEME_DIR}" ] && THEME_DIR="powerlevel9k"
+
+# THEME_GIT
+[ -z "${THEME_GIT}" ] && THEME_GIT="https://github.com/bhilburn/powerlevel9k.git"
 
 ###############################################################################
 
 print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551 \
-    && curl -o /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && sudo apt install -y /tmp/chrome.deb \
-    && rm /tmp/chrome.deb \
+    sudo apt-get install -y  zsh \
+    && if [ ! -d ~/.oh-my-zsh ]; then git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh; fi \
+    && chsh -s /bin/zsh \
     && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"

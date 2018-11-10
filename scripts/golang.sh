@@ -14,18 +14,17 @@ MARKER="golang"
 ###############################################################################
 
 # GOLANG_VERSION
-[ -z "${GOLANG_VERSION}" ] && GOLANG_VERSION="1.11"
+[ -z "${GOLANG_VERSION}" ] && GOLANG_VERSION="1.11.2"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$GOLANG_VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     curl -L https://storage.googleapis.com/golang/go${GOLANG_VERSION}.linux-amd64.tar.gz -o golang.tar.gz \
     && sudo tar -C /usr/local -xzf golang.tar.gz \
     && rm golang.tar.gz \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$GOLANG_VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

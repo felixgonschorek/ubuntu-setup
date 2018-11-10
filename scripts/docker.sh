@@ -10,15 +10,16 @@ set -e
 
 NAME="Docker"
 MARKER="docker"
+VERSION="current"
 
 ###############################################################################
 
 # DOCKER_COMPOSE_VERSION
-[ -z "${DOCKER_COMPOSE_VERSION}" ] && DOCKER_COMPOSE_VERSION="1.22.0"
+[ -z "${DOCKER_COMPOSE_VERSION}" ] && DOCKER_COMPOSE_VERSION="1.23.1"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     sudo apt-get remove -y docker docker-engine docker.io \
@@ -35,8 +36,7 @@ if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     \
     && sudo curl -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
     && sudo chmod +x /usr/local/bin/docker-compose \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker "$NAME" "$VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi

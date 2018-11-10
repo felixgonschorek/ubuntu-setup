@@ -8,29 +8,31 @@ set -e
 # URL: http://kernel.ubuntu.com/~kernel-ppa/mainline/
 ###############################################################################
 
-NAME="Kernel (4.15.12)"
-MARKER="kernel-4.15.12"
+VERSION="4.19.1"
+NAME="Kernel ($VERSION)"
+MARKER="kernel-$VERSION"
 
 ###############################################################################
 
-BASE_URL="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.15.12/"
-HEADERS_ALL="linux-headers-4.15.12-041512_4.15.12-041512.201803211230_all.deb"
-HEADERS_AMD64="linux-headers-4.15.12-041512-generic_4.15.12-041512.201803211230_amd64.deb"
-IMAGE_AMD64="linux-image-4.15.12-041512-generic_4.15.12-041512.201803211230_amd64.deb"
+BASE_URL="http://kernel.ubuntu.com/~kernel-ppa/mainline/v$VERSION/"
+HEADERS_ALL="linux-headers-4.19.1-041901_4.19.1-041901.201811041431_all.deb"
+HEADERS_AMD64="linux-headers-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb"
+IMAGE_AMD64="linux-image-unsigned-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb"
+MODULES_AMD64="linux-modules-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start $NAME $VERSION
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     mkdir -p /tmp/kernel-update \
     && curl -L "$BASE_URL$HEADERS_ALL" -o /tmp/kernel-update/$HEADERS_ALL \
     && curl -L "$BASE_URL$HEADERS_AMD64" -o /tmp/kernel-update/$HEADERS_AMD64 \
     && curl -L "$BASE_URL$IMAGE_AMD64" -o /tmp/kernel-update/$IMAGE_AMD64 \
+    && curl -L "$BASE_URL$MODULES_AMD64" -o /tmp/kernel-update/$MODULES_AMD64 \
     && sudo dpkg -i /tmp/kernel-update/*.deb \
     && rm -rf /tmp/kernel-update \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && write_marker $NAME $VERSION $MARKER
 else
     echo "$NAME is already installed"
 fi

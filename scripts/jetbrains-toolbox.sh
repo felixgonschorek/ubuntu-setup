@@ -14,17 +14,17 @@ MARKER="jetbrains-toolbox"
 ###############################################################################
 
 # JETBRAINS_TOOLBOX_VERSION
-[ -z "${JETBRAINS_TOOLBOX_VERSION}" ] && JETBRAINS_TOOLBOX_VERSION="1.11.4231"
+[ -z "${JETBRAINS_TOOLBOX_VERSION}" ] && JETBRAINS_TOOLBOX_VERSION="1.11.4269"
 
 ###############################################################################
 
-echo "Trying to install $NAME"
+print_install_start "$NAME" "$JETBRAINS_TOOLBOX_VERSION"
 
 if [ ! -f $MARKER_DIRECTORY/$MARKER ]; then
     curl -L https://download.jetbrains.com/toolbox/jetbrains-toolbox-${JETBRAINS_TOOLBOX_VERSION}.tar.gz -o /tmp/jbtb.tar.gz \
     && sudo tar xvfz /tmp/jbtb.tar.gz -C /opt/ \
-    && date > $MARKER_DIRECTORY/$MARKER \
-    && echo "Finished installing $NAME"
+    && rm /tmp/jbtb.tar.gz \
+    && write_marker "$NAME" "$JETBRAINS_TOOLBOX_VERSION" "$MARKER"
 else
     echo "$NAME is already installed"
 fi
